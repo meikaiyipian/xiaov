@@ -53,7 +53,7 @@ import org.apache.commons.lang.math.RandomUtils;
  * QQ service.
  *
  * @author <a href="http://88250.b3log.org">Liang Ding</a>
- * @version 1.4.3.6, Jul 4, 2016
+ * @version 1.4.3.8, Aug 8, 2016
  * @since 1.0.0
  */
 @Service
@@ -130,6 +130,12 @@ public class QQService {
     private BaiduQueryService baiduQueryService;
 
     /**
+     * ITPK query service.
+     */
+    @Inject
+    private ItpkQueryService itpkQueryService;
+
+    /**
      * Bot type.
      */
     private static final int QQ_BOT_TYPE = XiaoVs.getInt("qq.bot.type");
@@ -162,7 +168,7 @@ public class QQService {
     /**
      * 超过 {@value #PUSH_GROUP_USER_COUNT} 个成员的群才推送.
      */
-    private static final int PUSH_GROUP_USER_COUNT = 50;
+    private static int PUSH_GROUP_USER_COUNT = XiaoVs.getInt("qq.bot.pushGroupUserCnt");
 
     /**
      * 记录未群推过的群 id 集合.
@@ -654,9 +660,13 @@ public class QQService {
             if (1 == QQ_BOT_TYPE) {
                 ret = turingQueryService.chat(userName, content);
                 ret = StringUtils.replace(ret, "图灵机器人", XiaoVs.QQ_BOT_NAME + "机器人");
+                ret = StringUtils.replace(ret, "默认机器人", XiaoVs.QQ_BOT_NAME + "机器人");
+
                 ret = StringUtils.replace(ret, "<br>", "\n");
             } else if (2 == QQ_BOT_TYPE) {
                 ret = baiduQueryService.chat(content);
+            } else if (3 == QQ_BOT_TYPE) {
+                ret = itpkQueryService.chat(content);
             }
 
             if (StringUtils.isBlank(ret)) {

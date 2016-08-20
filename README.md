@@ -17,8 +17,10 @@
 
 ### 体验
 
+**体验之前一定要先仔细看完这个帖子：[如何正确地使用小薇 QQ 机器人](https://hacpai.com/article/1467011936362)**
+
 * 加 QQ 群 13139268，然后发消息“小薇，你好！”
-* **加小薇（Q3082959578）和小薇的守护（Q316281008）为好友，然后将他们都邀请进你所在的群就可以开始调戏了**
+* ~~加小薇（Q3082959578）和小薇的守护（Q316281008）为好友，然后将他们都邀请进你所在的群就可以开始调戏了~~ **请自建私服**
 * 在论坛的[社群动态](https://hacpai.com/community)页面可看到由 QQ 群同步过来的消息
 
 ## FAQ
@@ -78,7 +80,8 @@
 * qq.bot.name 定义了机器人的名字，这个主要是用于识别群消息是否“感兴趣”，比如对于群消息：“小薇，你吃过饭了吗？”包含了机器人的名字，机器人就对其进行处理
 * qq.bot.key 定义了管理 QQ 或论坛发过来的消息群推的口令，需要消息开头是这个口令，验证过后才会群推后面的消息内容
 * qq.bot.pushGroups 定义了群推的群名，用 `,` 分隔多个群；也可以配置成 `*` 推送所有群
-* qq.bot.ack 定义了是否启用消息送达确认机制（小薇的守护）
+* qq.bot.pushGroupUserCnt 定义了群推时群人数的下限，只有大于等于这个人数的群才推送
+* qq.bot.ack 定义了是否启用消息送达确认机制（小薇的守护），默认不启用
 * bot.follow.keywords 定义了监听群消息时的关键词，碰到这些词就做处理，比如对于群消息：“如何能在 3 天内精通 Java 呢？”包含了关键词 Java，机器人就对其进行处理
 * bot.follow.keywordAnswer 定义了监听群消息时出现了关键词后的回复模版
 * forum.api & forum.key 定义了论坛 API 地址和口令，小薇会将所有监听到的消息通过该 API 转发到论坛
@@ -90,14 +93,16 @@
 * 功能：小薇提供给论坛调用的 HTTP 接口，用于将论坛的内容推送到 QQ 群
 * URL：/qq
 * Method：POST
-* Body：key={qq.bot.key}&msg={msgcontent}
+* QueryStr：key={qq.bot.key}&msg={msgcontent}（也可以放到 Body 里面）
+* 例如：/qq?key=123456&msg=Hello
 
 ### QQ 群推送论坛
 
 * 功能：由论坛提供给小薇调用的 HTTP 接口，用于将 QQ 群消息推送到论坛（这个接口是论坛实现的，这里是给出小薇的调用方式和参数）
 * URL：{forum.api}
 * Method：POST
-* Body：key={forum.key}&msg={msgcontent}&user={hexuserid}
+* QueryStr：key={forum.key}&msg={msgcontent}&user={hexuserid}
+* 例如：/xiaov?key=123456&msg=Hello&user=0a
 
 ## 鸣谢
 
@@ -107,3 +112,13 @@
 * [图灵机器人](http://www.tuling123.com)：赋予了小薇抖机灵的能力..
 * [百度机器人](https://baidu.com)：再次赋予了小薇抖机灵的能力....
 * [Latke](https://github.com/b3log/latke)：简洁高效的 Java Web 框架 
+
+----
+
+## 其他教程
+
+如果上面的文档看得一头雾水（作者语文高考差点不及格，见谅），请看**下面**由热心开发者提供的图文并茂、绘声绘色的、认真的教程：
+
+* [小薇聊天机器人用MyEclipse部署上线SOP教程](http://relyn.cn/articles/2016/07/30/1469805716702.html)
+
+
