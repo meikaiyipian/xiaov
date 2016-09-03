@@ -13,7 +13,7 @@
 
 ### 作者
 
-小薇的爸爸叫 [Daniel](https://github.com/88250)，妈妈叫 [Vanessa](https://github.com/Vanessa)，其他好心人可以在[这里](https://github.com/b3log/xiaov/graphs/contributors)看到。
+小薇的爸爸叫 [Daniel](https://github.com/88250)，妈妈叫 [Vanessa](https://github.com/Vanessa219)，其他好心人可以在[这里](https://github.com/b3log/xiaov/graphs/contributors)看到。
 
 ### 体验
 
@@ -63,12 +63,17 @@
 1. 安装好 Java 1.7+、Maven 2+
 2. Clone 本项目，并在项目根目录上执行 `mvn jetty:run`
 
-这样小薇就启动了，然后根据输出提示进行扫码登录，一共需要扫两次：
+这样小薇就启动了，然后根据输出提示进行扫码登录：
 
 * 第一次扫码是小薇登录
-* 第二次扫码是小薇的守护登录
+* 第二次扫码是小薇的守护登录（如果启用了守护才会需要扫第二次码）
 
-小薇的守护只需要和小薇在同一个群就行（但不要用自己的，需要用一个不发消息的 QQ，不然消息监听会有问题）。
+小薇的守护只需要和小薇在同一个群就行（守护不要用自己的，需要用一个不发消息的 QQ，不然消息监听会有问题）。
+
+另外，如果你一定要在服务器上启动小薇（但真心不建议，请参考 FAQ 第二条）：
+
+1. 打 war 包部署自己的容器，需要修改 latke.props 中的 `serverHost` 为你服务器的公网 IP、`serverPort` 为你容器监听的端口，如果你用了反向代理，那么 `serverHost` 可能就是你绑定的域名、`serverPort` 是 80。简而言之，这两个值是你最终访问接口时候的值
+2. 登录的扫码可能有点麻烦，这时可以通过 /login 地址来访问二维码，哥考虑得周到吧 :smirk: （其实得感谢 @abinnz 和 @red3 在这个改进上面所提出的建议）
 
 ## 配置
 
@@ -93,7 +98,7 @@
 * 功能：小薇提供给论坛调用的 HTTP 接口，用于将论坛的内容推送到 QQ 群
 * URL：/qq
 * Method：POST
-* QueryStr：key={qq.bot.key}&msg={msgcontent}（也可以放到 Body 里面）
+* Body：key={qq.bot.key}&msg={msgcontent}
 * 例如：/qq?key=123456&msg=Hello
 
 ### QQ 群推送论坛
@@ -101,7 +106,7 @@
 * 功能：由论坛提供给小薇调用的 HTTP 接口，用于将 QQ 群消息推送到论坛（这个接口是论坛实现的，这里是给出小薇的调用方式和参数）
 * URL：{forum.api}
 * Method：POST
-* QueryStr：key={forum.key}&msg={msgcontent}&user={hexuserid}
+* Body：key={forum.key}&msg={msgcontent}&user={hexuserid}
 * 例如：/xiaov?key=123456&msg=Hello&user=0a
 
 ## 鸣谢
@@ -109,8 +114,9 @@
 小薇的诞生离不开以下开源项目/产品服务：
 
 * [Smart QQ Java](https://github.com/ScienJus/smartqq)：封装了 SmartQQ（WebQQ）的 API，完成 QQ 通讯实现
-* [图灵机器人](http://www.tuling123.com)：赋予了小薇抖机灵的能力..
-* [百度机器人](https://baidu.com)：再次赋予了小薇抖机灵的能力....
+* [图灵机器人](http://www.tuling123.com)：赋予了小薇抖机灵的能力
+* [百度机器人](https://baidu.com)：再次赋予了小薇抖机灵的能力
+* [茉莉机器人](http://www.itpk.cn)：再再次赋予了小薇抖机灵的能力（据说很污 :joy:）
 * [Latke](https://github.com/b3log/latke)：简洁高效的 Java Web 框架 
 
 ----
